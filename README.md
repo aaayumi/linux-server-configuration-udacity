@@ -63,3 +63,141 @@ Configure UDW to allow only incoming request from port2200(SSH), port80 (HTTP) a
 
 Go to AWS page and set up relevant ports from `networking` tab.
 
+### 5. Create a new user called grader and give an access 
+Run `sudo adduser grader` to create a new user called `grader`
+
+Create a new directory in sudoer directory with `sudo nano /etc/sudoers.d/grader`
+
+Add `grader ALL=(ALL:ALL) ALL` in nano editor 
+
+Run `sudo nano /etc/hosts`
+
+### 6. Update all packages 
+
+Run `sudo apt-get update` and `sudo apt-get upgrade`
+
+### 7. Set up local time zone
+
+Run `sudo dpkg-reconfigure tzdata` and choose UTC
+
+### 8. Install Apache application and wsgi module
+
+Run `sudo apt-get install apache2` to install apache 
+
+Run `sudo apt-get install python-setuptools libapache2-mod-wsgi` to install mod-wsgi module
+
+Start the server `sudo service apache2 start`
+
+### 9. Install git
+
+Run `sudo apt-get install git`
+
+Configure your username and email. `git config --global user.name <username>` and `git config --global user.email <email>`
+
+### 10. Clone the project
+
+Run `cd /var/www` and `sudo mkdir catalog`
+
+Change the owner to grader `sudo chown -R grader:grader catalog`
+
+Run `sudo chmod catalog` to give a permission to clone the project.
+
+Switch to the `catalog` directory and clone the Catalog project.
+
+`cd catalog` and `git clone https://github.com/aaayumi/item-catalog-udacity.git`
+
+Add `catalog.wsgi` file.
+
+Run `sudo nano catalog.wsgi` and add the following code.
+
+```
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0, "/var/www/catalog/")
+
+from catalog import app as application
+application.secret_key = 'secret'
+```
+
+Modify filenames to deploy on AWS.
+
+Rename `webserver.py` to `__init__.py` 
+
+`mv webserver.py  __init__.py`
+
+### 11. Install virtual environment and Flask framework
+
+Install `pip`, `sudo apt-get install python-pip`
+
+Run `sudo apt-get install python-virtualenv` to install virtual environment
+
+Create a new virtuall environment with `sudo virtualenv venv` and activate it `source venv/bin/activate`
+
+Change permissions to the viertual environment folder `sudo chmod -R 777 venv`
+
+Install Flask `pip install Flask` and dependencies `pip install bleach httplib2 request oauth2client sqlalchemy python-psycopg2.`
+
+### 12. Configure Apache
+
+Create a config file `sudo nano /etc/apache2/sites-available/catalog.conf`
+
+Paste the following code
+
+```
+<VirtualHost *:80>
+    ServerName 52.34.208.247
+    ServerAlias ec2-52-34-208-247.us-west-2.compute.amazonaws.com
+    ServerAdmin admin@52.34.208.247
+    WSGIDaemonProcess catalog python-path=/var/www/catalog:/var/www/catalog/venv/lib/python2.7/site-packages
+    WSGIProcessGroup catalog
+    WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+    <Directory /var/www/catalog/catalog/>
+        Order allow,deny
+        Allow from all
+    </Directory>
+    Alias /static /var/www/catalog/catalog/static
+    <Directory /var/www/catalog/catalog/static/>
+        Order allow,deny
+        Allow from all
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    LogLevel warn
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+Enable the new virtual host `sudo a2ensite catalog`
+
+### 13. Install and configure PostgressSQL
+
+Run `sudo apt-get install PostgreSQL`
+
+Check if no remote connections are allowed with `sudo vim /etc/postgresql/9.3/main/pg_hba.conf`
+
+Login to postgress `sudo su - postgres` and `psql`
+
+Create a new user `CREATE USER catalog WITH PASSWORD 'password'`
+
+Create a DB called 'catalog' with `ALTER USER catalog CREATEDB` and `CREATE DATABASE catalog WITH OWNER catalog`
+
+Connect to the DB with `\c catalog`
+
+Revoke all rights `REVOKE ALL ON SCHEMA public FROM public`
+
+Change a grand from public to catalog `GRANT ALL ON SCHEMA public TO catalog`
+
+Logout from postgress and return to the grader user ` \q` and `exit`
+
+Change the engine inside Flask application.
+
+`engine = create_engine('postgresql://catalog:password@localhost/catalog')`
+
+Set up the DB with `python /var/www/catalog/item-catalog-udacity/database_setup.py`
+
+### 14. Restart Apache 
+
+Run `sudo service apache2 restart` and check `http://54.93.200.82/`
+
+## References
+[flask document](mod_wsgi (Apache))
