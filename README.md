@@ -72,6 +72,24 @@ Add `grader ALL=(ALL:ALL) ALL` in nano editor
 
 Run `sudo nano /etc/hosts`
 
+Set SSH keys for grader user with `ssh-keygen` in your local machine.
+
+Copy the generated SSH to a virtual environment.
+
+Run the following command in your virtual environment.
+
+`su - grader`
+
+`mkdir .ssh`
+
+`touch .ssh/authorized_keys`
+
+`nano .ssh/authorized_keys` and copy your generated SSH key here.
+
+Reload SSH with `service ssh restart`
+
+Then now you can login grader user
+
 ### 6. Update all packages 
 
 Run `sudo apt-get update` and `sudo apt-get upgrade`
