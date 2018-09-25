@@ -164,11 +164,8 @@ Paste the following code
 
 ```
 <VirtualHost *:80>
-    ServerName 52.34.208.247
-    ServerAlias ec2-52-34-208-247.us-west-2.compute.amazonaws.com
-    ServerAdmin admin@52.34.208.247
-    WSGIDaemonProcess catalog python-path=/var/www/catalog:/var/www/catalog/venv/lib/python2.7/site-packages
-    WSGIProcessGroup catalog
+    ServerName Public-IP-Address
+    ServerAdmin admin@Public-IP-Address
     WSGIScriptAlias / /var/www/catalog/catalog.wsgi
     <Directory /var/www/catalog/catalog/>
         Order allow,deny
