@@ -1,8 +1,12 @@
 # Linux Server Configuration Project
 
 ## Server Details
+
 IP address : 54.93.200.82
+
 SSH port : 2200
+
+EC2 URL : http://ec2-54-93-200-82.us-west-2.compute.amazonaws.com/
 
 ## Configuration steps 
 ### 1. Create an instance in AWS Lightsail 
