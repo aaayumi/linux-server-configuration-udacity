@@ -63,7 +63,7 @@ Configure UDW to allow only incoming request from port2200(SSH), port80 (HTTP) a
 
 `sudo ufw enable` -- enable ufw
 
-`sudo uff status` -- check current status of ufw
+`sudo ufw status` -- check current status of ufw
 
 Go to AWS page and set up relevant ports from `networking` tab.
 
