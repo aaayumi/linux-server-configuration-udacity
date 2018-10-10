@@ -2,11 +2,11 @@
 
 ## Server Details
 
-IP address : 35.159.17.133
+IP address : 18.194.96.162
 
 SSH port : 2200
 
-EC2 URL : http://ec2-35-159-17-133.us-west-2.compute.amazonaws.com/
+EC2 URL : http://ec2-18-194-96-162.us-west-2.compute.amazonaws.com/
 
 ## Configuration steps 
 ### 1. Create an instance in AWS Lightsail 
@@ -31,7 +31,7 @@ Run `chmod 600 LightsailDefaultPrivateKey-*.pem` to restrict the file permission
 
 Change name to `lightsail_key.rsa`.
 
-Run a command `ssh -i lightsail_key.rsa ubuntu@54.93.200.82` in your terminal.
+Run a command `ssh -i lightsail_key.rsa ubuntu@18.194.96.162` in your terminal.
 
 ### 3. Change SSH port from 22 to 2200
 
