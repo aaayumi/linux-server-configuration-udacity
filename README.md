@@ -2,11 +2,11 @@
 
 ## Server Details
 
-IP address : 18.194.96.162
+IP address : 18.196.167.64
 
 SSH port : 2200
 
-EC2 URL : http://ec2-18-194-96-162.us-west-2.compute.amazonaws.com/
+EC2 URL : http://ec2-18-196-167-64.us-west-2.compute.amazonaws.com/
 
 ## Configuration steps 
 ### 1. Create an instance in AWS Lightsail 
@@ -31,7 +31,7 @@ Run `chmod 600 LightsailDefaultPrivateKey-*.pem` to restrict the file permission
 
 Change name to `lightsail_key.rsa`.
 
-Run a command `ssh -i lightsail_key.rsa ubuntu@18.194.96.162` in your terminal.
+Run a command `ssh -i lightsail_key.rsa ubuntu@18.196.167.64` in your terminal.
 
 ### 3. Change SSH port from 22 to 2200
 
@@ -216,7 +216,7 @@ Set up the DB with `python /var/www/catalog/item-catalog-udacity/database_setup.
 
 ### 14. Restart Apache 
 
-Run `sudo service apache2 restart` and check `http://54.93.200.82/`
+Run `sudo service apache2 restart` and check `http://18.196.167.64/`
 
 ## References
 [Flask document](http://flask.pocoo.org/docs/1.0/deploying/mod_wsgi/)
