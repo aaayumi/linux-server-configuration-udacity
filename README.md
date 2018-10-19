@@ -92,7 +92,11 @@ Run the following command in your virtual environment.
 
 Reload SSH with `service ssh restart`
 
-Then now you can login grader user
+Then now you can login grader user.
+
+Disable rootlogin.
+
+Open `/etc/ssh/sshd_config` and find `PermitRootLogin` and change it to `no`.
 
 ### 6. Update all packages 
 
