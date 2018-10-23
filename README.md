@@ -7,6 +7,7 @@ IP address : 18.196.167.64
 SSH port : 2200
 
 EC2 URL : http://ec2-18-196-167-64.us-west-2.compute.amazonaws.com/
+(This instane is no longer available.Please use it as reference.)
 
 ## Configuration steps 
 ### 1. Create an instance in AWS Lightsail 
